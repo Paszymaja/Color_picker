@@ -10,8 +10,15 @@ class MyTestCase(unittest.TestCase):
             self.assertEqual(dataset_generator.hex_to_rgb(hex_data), rgb_data)
 
     def test_color_generator(self):
-        print(dataset_generator.generate_colors())
-        print(dataset_generator.generate_colors_2())
+        type_1 = dataset_generator.generate_colors(5)
+        type_2 = list(dataset_generator.generate_colors_2(5))
+        print(type_1)
+        print(list(type_2))
+        self.assertEqual(len(type_1), len(type_2))
+
+    def test_color_distance(self):
+        test_data_1, test_data_2 = (157, 172, 128), (200, 36, 122)
+        self.assertEqual(dataset_generator.color_distance(test_data_1, test_data_2), 20381)
 
 
 if __name__ == '__main__':
