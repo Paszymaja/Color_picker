@@ -1,4 +1,5 @@
 import csv
+import types
 from random import randint
 
 
@@ -31,4 +32,11 @@ def color_distance(color_1, color_2):
 
 
 def nearest_neighbors(model_colors, target_colors, num_neighbors=5):
-    pass
+    if isinstance(model_colors, types.GeneratorType):
+        model_colors = list(model_colors)
+
+    for target in target_colors:
+        distances = sorted((color_distance(c[0], target), c) for c in model_colors)
+        yield target, distances[:5]
+
+
