@@ -19,7 +19,7 @@ class Application(tk.Frame):
         master.columnconfigure(0, weight=1)
         master.rowconfigure(0, weight=1)
         self.create_widgets()
-        self.file = csv.writer(open("colors.csv", "a"))
+        self.file = csv.writer(open("data/colors.csv", "a"))
 
     def create_color_button(self, label, column, row):
         button = tk.Button(self, command=lambda: self.click_color(label), text=label)

@@ -1,6 +1,7 @@
 import csv
 import types
 from random import randint
+from collections import Counter
 
 
 def hex_to_rgb(hex_color):
@@ -31,7 +32,7 @@ def color_distance(color_1, color_2):
     return sum_distance_sqr
 
 
-def nearest_neighbors(model_colors, target_colors, num_neighbors=5):
+def nearest_neighbors(model_colors, target_colors):
     if isinstance(model_colors, types.GeneratorType):
         model_colors = list(model_colors)
 
@@ -40,3 +41,24 @@ def nearest_neighbors(model_colors, target_colors, num_neighbors=5):
         yield target, distances[:5]
 
 
+def name_colors(model_colors, target_colors):
+    for target, near in nearest_neighbors(model_colors, target_colors):
+        name_guess = Counter(n[1] for n in near).most_common()[0][0]
+        yield target, name_guess
+
+
+def write_results(colors, filename='output.csv'):
+    with open(filename, 'w') as file:
+        writer = csv.writer(file)
+        for (r, g, b), name in colors:
+            writer.writerow([name, f'#{r:02x}{g:02x}{b:02x}'])
+
+
+def process_colors(dataset_filename='colors.csv'):
+    model_colors = load_colors(dataset_filename)
+    colors = name_colors(model_colors, generate_colors())
+    write_results(colors)
+
+
+if __name__ == "__main__":
+    process_colors()
