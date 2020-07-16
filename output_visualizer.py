@@ -1,10 +1,20 @@
-import tkinter as tk
 import csv
+import tkinter as tk
 
 
 class Application(tk.Frame):
     def __init__(self, master=None):
         super().__init__(master)
+        self.no_button = tk.Button(
+            self, command=self.count_next, text="No"
+        )
+        self.yes_button = tk.Button(
+            self, command=self.count_yes, text="Yes"
+        )
+        self.percent_accurate = tk.Label(self, height="3", text="0%")
+        self.quit = tk.Button(
+            self, text="Quit", command=root.destroy, bg="#ffaabb"
+        )
         self.grid(sticky="news")
         master.columnconfigure(0, weight=1)
         master.rowconfigure(0, weight=1)
@@ -31,22 +41,12 @@ class Application(tk.Frame):
         self.color_label = tk.Label(self, text=color_text, height="3")
         self.mk_grid(self.color_label, 0, 1, 2)
 
-        self.no_button = tk.Button(
-            self, command=self.count_next, text="No"
-        )
         self.mk_grid(self.no_button, 0, 2)
 
-        self.yes_button = tk.Button(
-            self, command=self.count_yes, text="Yes"
-        )
         self.mk_grid(self.yes_button, 1, 2)
 
-        self.percent_accurate = tk.Label(self, height="3", text="0%")
         self.mk_grid(self.percent_accurate, 0, 3, 2)
 
-        self.quit = tk.Button(
-            self, text="Quit", command=root.destroy, bg="#ffaabb"
-        )
         self.mk_grid(self.quit, 0, 4, 2)
 
     def count_yes(self):
